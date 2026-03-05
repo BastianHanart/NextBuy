@@ -3,3 +3,4 @@ Myvenv
 datasets
 datasets/aisles.csv
 .ipynb_checkpoints
+/CSV_Cleaned.csv
