@@ -5,7 +5,9 @@ import numpy as np
 import streamlit as st
 import plotly.express as px
 
-
+######################################################
+################ CHARGEMENT DES DATA #################
+######################################################
 
 CSV_untouch = pd.read_csv('CSV_Cleaned.csv')
 CSV_Clean = CSV_untouch.groupby(
@@ -19,13 +21,15 @@ CSV_Clean = CSV_Clean.reset_index()
 CSV_Clean = CSV_Clean.sort_values(by=["add_to_cart_order"])
 DF = CSV_Clean.head(180)
 
-##GRAPH 01 - Q01
+######################################################
+#################### GRAPH 01 Q01 ####################
+######################################################
+
 fig1 = px.bar(
     DF,
     x="product_name",
     y="add_to_cart_order",
     height=1000
-    
 )
 
 fig1.update_layout(
@@ -33,12 +37,11 @@ fig1.update_layout(
     yaxis_title="???"
 )
 
-
 st.plotly_chart(fig1)
 
-#######################
-
-##GRAPH 02 - Q02
+######################################################
+#################### GRAPH 02 Q02 ####################
+######################################################
 
 listeaisle = {}
 
@@ -55,7 +58,6 @@ fig2 = px.bar(
     x=x_RESULT,
     y=listeaisle.values(),
     height=600
-    
 )
 
 fig2.update_layout(
@@ -63,9 +65,11 @@ fig2.update_layout(
     yaxis_title="Nombre d'occurrence"
 )
 
-
 st.plotly_chart(fig2)
-##
+
+######################################################
+#################### GRAPH 03 Q02 ####################
+######################################################
 
 listedep = {}
 for k in CSV_untouch["department"]:
@@ -74,13 +78,11 @@ for k in CSV_untouch["department"]:
     else:
         listedep[k] += 1
 
-
 fig3 = px.bar(
     DF,
     x=listedep.keys(),
     y=listedep.values(),
     height=600
-    
 )
 
 fig3.update_layout(
@@ -88,11 +90,12 @@ fig3.update_layout(
     yaxis_title="Nombre d'occurrence"
 )
 
-
 st.plotly_chart(fig3)
 
+######################################################
+#################### GRAPH 04 Q04 ####################
+######################################################
 
-##GRAPH 04 Q04
 DF = round(CSV_untouch["order_hour_of_day"], 0)
 listeheure = {}
 for k in DF:
@@ -106,7 +109,6 @@ fig4 = px.bar(
     x=listeheure.keys(),
     y=listeheure.values(),
     height=600
-    
 )
 
 fig4.update_layout(
@@ -114,11 +116,12 @@ fig4.update_layout(
     yaxis_title="Nombre d'achat"
 )
 
-
 st.plotly_chart(fig4)
 
 
-##GRAPH 05 Q05
+######################################################
+#################### GRAPH 05 Q05 ####################
+######################################################
 
 # Bad_DEPARTEMENT = ['other', 'pets', 'personal care', 'house hold']
 # CSV_untouch = CSV_untouch.drop(CSV_untouch[CSV_untouch.department.isin(Bad_DEPARTEMENT)].index)
@@ -176,7 +179,9 @@ st.plotly_chart(fig4)
 
 
 
-# ##graph Q06
+######################################################
+#################### GRAPH 06 Q06 ####################
+######################################################
 
 # CSV_Clean = CSV_untouch.groupby(
 #     ["user_id"]
