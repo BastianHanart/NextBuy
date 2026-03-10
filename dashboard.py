@@ -6,14 +6,17 @@ import streamlit as st
 #st.logo("logo.png", size="large")
 st.set_page_config(layout="wide")
 
-
+Prevision = st.Page(
+    page="pages/Prevision.py",
+    title="Prévision",
+)
 
 data_view = st.Page(
     page="pages/view_data.py",
     title="Exploration des données",
     default=True,
 )
-pg = st.navigation(pages=[data_view])
+pg = st.navigation(pages=[Prevision, data_view])
 pg.run()
 
 
