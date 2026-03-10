@@ -24,12 +24,12 @@ DF = CSV_Clean.head(180)
 ######################################################
 #################### GRAPH 01 Q01 ####################
 ######################################################
-
+st.write("### Quel article les clients mettent-ils en premier dans leur panier ?")
 fig1 = px.bar(
     DF,
     x="product_name",
     y="add_to_cart_order",
-    height=1000
+    height=750
 )
 
 fig1.update_layout(
@@ -43,6 +43,7 @@ st.plotly_chart(fig1)
 #################### GRAPH 02 Q02 ####################
 ######################################################
 
+st.write("### Quel rayon et quel département contiennent le plus (le moins) de produits ?")
 listeaisle = {}
 
 for k in CSV_untouch["aisle"]:
@@ -65,7 +66,7 @@ fig2.update_layout(
     yaxis_title="Nombre d'occurrence"
 )
 
-st.plotly_chart(fig2)
+
 
 ######################################################
 #################### GRAPH 03 Q02 ####################
@@ -90,12 +91,21 @@ fig3.update_layout(
     yaxis_title="Nombre d'occurrence"
 )
 
-st.plotly_chart(fig3)
+######################################################
+#################### GRAPH 02 & 03 ###################
+######################################################
+
+fig2_col, fig3_col = st.columns(2)
+with fig2_col:
+    st.plotly_chart(fig2)
+
+with fig3_col:
+    st.plotly_chart(fig3)
 
 ######################################################
 #################### GRAPH 04 Q04 ####################
 ######################################################
-
+st.write("### Quand et comment les clients passent-ils généralement leurs commandes ?")
 DF = round(CSV_untouch["order_hour_of_day"], 0)
 listeheure = {}
 for k in DF:
@@ -118,11 +128,10 @@ fig4.update_layout(
 
 st.plotly_chart(fig4)
 
-
 ######################################################
 #################### GRAPH 05 Q05 ####################
 ######################################################
-
+# st.write("### Quel est l'horaire ou il y a le plus d'achat de nourriture")
 # Bad_DEPARTEMENT = ['other', 'pets', 'personal care', 'house hold']
 # CSV_untouch = CSV_untouch.drop(CSV_untouch[CSV_untouch.department.isin(Bad_DEPARTEMENT)].index)
 # CSV_Clean = CSV_untouch.groupby(
@@ -146,37 +155,15 @@ st.plotly_chart(fig4)
 #     x=listeheure.keys(),
 #     y=listeheure.values(),
 #     height=600
-    
 # )
 
 # fig5.update_layout(
 #     xaxis_title="Heur de la journée",
-#     yaxis_title="NombrGGe d'achat"
+#     yaxis_title="Nombre d'achat de nourriture"
 # )
 
 
 # st.plotly_chart(fig5)
-
-
-
-# # #on defini la taille du graph
-# # plt.figure(figsize=(20, 8))
-# # plt.bar(x, y)
-
-# # # on rotate les label x
-# # plt.tick_params(axis='x', labelrotation=90)
-
-# # # permnet de definir la zone des axes
-# # ax = plt.gca()
-
-# # # defini un range
-# # ax.set_xticks(range(0, 24, 1))
-# # plt.title("Graphique montrant les heures avec le plus d'achat de nourriture")
-
-# # # on save
-# # plt.savefig('Graphique_Img/Graph+_buy_food')
-# # plt.show()
-
 
 
 ######################################################
@@ -196,27 +183,22 @@ st.plotly_chart(fig4)
 
 # listejour = {}
 
-# # On fait un boucle qui parcour tout DF, et on ajoute chaque nouvelle durée de temps en clé si elle n'existe pas, et on augmente sa valeur qui 
-# # correspond au nombre de fois ou cette durée apparait dans le CSV
 # for k in DF["days_since_prior_order"]:
 #     if k not in listejour:
 #         listejour[k] = 1
 #     else:
 #         listejour[k] += 1
 
-
 # fig6 = px.bar(
 #     DF,
 #     x=listejour.keys(),
 #     y=listejour.values(),
 #     height=600
-    
 # )
 
 # fig6.update_layout(
 #     xaxis_title="Heur de la journée",
 #     yaxis_title="Nombre d'achat"
 # )
-
 
 # st.plotly_chart(fig6)
