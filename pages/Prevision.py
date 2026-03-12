@@ -1,6 +1,5 @@
 import pandas as pd
 import streamlit as st
-import plotly.express as px
 
 
 CSV_untouch = pd.read_csv('CSV_Cleaned.csv')
