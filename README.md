@@ -36,7 +36,7 @@ Si la page ne s’ouvre pas automatiquement, ouvrez votre navigateur et tapez da
 localhost:8501
 Explorer le code du projet
 
-#### Si vous souhaitez regarder plus en détail notre code, voici les fichiers les plus intéressants à parcourir à l’aide d’un IDE comme VS Code ou Jupyter Notebook.
+### Si vous souhaitez regarder plus en détail notre code, voici les fichiers les plus intéressants à parcourir à l’aide d’un IDE comme VS Code ou Jupyter Notebook.
 
 #### Analyse.ipynb
 
