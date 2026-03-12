@@ -1,7 +1,5 @@
 import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
-import numpy as np
 import streamlit as st
 import plotly.express as px
 
@@ -24,20 +22,20 @@ DF = CSV_Clean.head(180)
 ######################################################
 #################### GRAPH 01 Q01 ####################
 ######################################################
-st.write("### Which item do customers put in their cart first")
-fig1 = px.bar(
-    DF,
-    x="product_name",
-    y="add_to_cart_order",
-    height=750
-)
+# st.write("### Which item do customers put in their cart first")
+# fig1 = px.bar(
+#     DF,
+#     x="product_name",
+#     y="add_to_cart_order",
+#     height=750
+# )
 
-fig1.update_layout(
-    xaxis_title="Nom du produit",
-    yaxis_title="Ordre d'ajout au panier"
-)
+# fig1.update_layout(
+#     xaxis_title="Nom du produit",
+#     yaxis_title="Ordre d'ajout au panier"
+# )
 
-st.plotly_chart(fig1)
+# st.plotly_chart(fig1)
 
 ######################################################
 #################### GRAPH 02 Q02 ####################
