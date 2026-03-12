@@ -38,21 +38,21 @@ Explorer le code du projet
 
 #### Si vous souhaitez regarder plus en détail notre code, voici les fichiers les plus intéressants à parcourir à l’aide d’un IDE comme VS Code ou Jupyter Notebook.
 
-##### Analyse.ipynb
+#### Analyse.ipynb
 
 Ce premier fichier nous a permis de parcourir les différents tableaux afin de détecter les premières erreurs potentielles.
 
 Nous analysons de nombreux éléments qui nous permettent de faire un premier tri important entre les données à conserver et celles à supprimer.
 
-##### Nettoyage.ipynb
+#### Nettoyage.ipynb
 
 Ce fichier permet de comprendre notre cheminement de pensée ainsi que les différentes actions que nous avons réalisées pour nettoyer les données et pouvoir ensuite utiliser au mieux notre fichier CSV (tableau de valeurs).
 
-##### notebook.ipynb
+#### notebook.ipynb
 
 Ce fichier permet de visualiser différents graphiques répondant à 8 questions principales que nous nous sommes posées au début du projet.
 
-##### Reflexion.ipynb
+#### Reflexion.ipynb
 
 Dans la continuité de notre réflexion, ce fichier nous a servi à noter et expliquer chaque étape du projet.
 
@@ -64,7 +64,7 @@ Il nous permet :
 
 - et de retrouver facilement chaque élément important du projet.
 
-##### Model_IA_Type_B.ipynb
+#### Model_IA_Type_B.ipynb
 
 Ce fichier est dédié au développement et à l’entraînement de nos différents modèles d’IA.
 
