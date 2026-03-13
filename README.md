@@ -21,6 +21,33 @@ Le fichier requirements.txt contient toutes les dépendances nécessaires au pro
 
 Si cette étape se déroule correctement, alors le projet est initialisé et prêt à être utilisé.
 
+
+## Arborescence requise
+
+Pour utiliser notre projet, il vous faut une arborescence spéciale afin de le faire fonctionner correctement. 
+(À noter que cette arborescence est basée sur notre fichier `.gitignore` et peut être modifiée par vous-même.)
+
+Projet/
+├── datasets/
+│   └── ... (fichiers de données brutes (CSV)
+│
+├── Graphique_Img/
+│   └── ... (images générées pour les graphiques)
+│
+├── Model_IA/
+│   └── ... (modèles entraînés format Joblib)
+│
+├── Myvenv/
+│   └── ... (environnement virtuel Python)
+│
+├── pages/
+│   └── ... (pages Streamlit supplémentaires)
+|
+├── Analyse.ipynb
+├── CSV_Cleaned.csv
+
+
+
 ## Utiliser notre projet
 
 Pour accéder à notre dashboard interactif et retrouver toutes les informations importantes, exécutez la commande suivante :
