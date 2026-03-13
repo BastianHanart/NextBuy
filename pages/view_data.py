@@ -6,8 +6,13 @@ import plotly.express as px
 ######################################################
 ################ CHARGEMENT DES DATA #################
 ######################################################
+@st.cache_data
+def load_data():
+    CSV_untouch = pd.read_csv('CSV_Cleaned.csv')
+    return CSV_untouch
 
-CSV_untouch = pd.read_csv('CSV_Cleaned.csv')
+CSV_untouch = load_data()
+
 CSV_Clean = CSV_untouch.groupby(
     ["product_name"]
 ).agg(
