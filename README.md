@@ -27,24 +27,26 @@ Si cette étape se déroule correctement, alors le projet est initialisé et pr�
 Pour utiliser notre projet, il vous faut une arborescence spéciale afin de le faire fonctionner correctement. 
 (À noter que cette arborescence est basée sur notre fichier `.gitignore` et peut être modifiée par vous-même.)
 
+```
 Projet/
 ├── datasets/
-│   └── ... (fichiers de données brutes (CSV)
+│   └── ... (fichiers de données brutes, CSV)
 │
 ├── Graphique_Img/
 │   └── ... (images générées pour les graphiques)
 │
 ├── Model_IA/
-│   └── ... (modèles entraînés format Joblib)
+│   └── ... (modèles entraînés au format Joblib)
 │
 ├── Myvenv/
 │   └── ... (environnement virtuel Python)
 │
 ├── pages/
 │   └── ... (pages Streamlit supplémentaires)
-|
+│
 ├── Analyse.ipynb
 ├── CSV_Cleaned.csv
+```
 
 
 
