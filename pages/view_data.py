@@ -3,64 +3,45 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import plotly.express as px
 
-######################################################
-################ CHARGEMENT DES DATA #################
-######################################################
+##########################################################################################
+################################## CHARGEMENT DES DATA ###################################
+##########################################################################################
 @st.cache_data
 def load_data():
     CSV_untouch = pd.read_csv('CSV_Cleaned.csv')
     return CSV_untouch
 
+@st.cache_data
+def compute_stats(df):
+
+    listeaisle = df["aisle"].value_counts()
+
+    listedep = df["department"].value_counts()
+
+    listeheure = df["order_hour_of_day"].round().value_counts().sort_index()
+
+    listejour = df["days_since_prior_order"].round().value_counts().sort_index()
+
+    return listeaisle, listedep, listeheure, listejour
+
 CSV_untouch = load_data()
 
-CSV_Clean = CSV_untouch.groupby(
-    ["product_name"]
-).agg(
-    {
-        "add_to_cart_order": "mean"
-    }
-)
-CSV_Clean = CSV_Clean.reset_index()
-CSV_Clean = CSV_Clean.sort_values(by=["add_to_cart_order"])
-DF = CSV_Clean.head(180)
+listeaisle, listedep, listeheure, listejour = compute_stats(CSV_untouch)
+
+##########################################################################################
+###################################### Graphiques ########################################
+##########################################################################################
+
 
 ######################################################
-#################### GRAPH 01 Q01 ####################
-######################################################
-# st.write("### Which item do customers put in their cart first")
-# fig1 = px.bar(
-#     DF,
-#     x="product_name",
-#     y="add_to_cart_order",
-#     height=750
-# )
-
-# fig1.update_layout(
-#     xaxis_title="Nom du produit",
-#     yaxis_title="Ordre d'ajout au panier"
-# )
-
-# st.plotly_chart(fig1)
-
-######################################################
-#################### GRAPH 02 Q02 ####################
+#################### GRAPH 01 Q02 ####################
 ######################################################
 
 st.write("### Which aisle and departement have the most (less) preoducts")
-listeaisle = {}
-
-for k in CSV_untouch["aisle"]:
-    if k not in listeaisle:
-         listeaisle[k] = 1
-    else:
-        listeaisle[k] += 1
-
-        x_RESULT = listeaisle.keys()
 
 fig2 = px.bar(
-    DF,
-    x=x_RESULT,
-    y=listeaisle.values(),
+    x=listeaisle.index,
+    y=listeaisle.values,
     height=600
 )
 
@@ -69,23 +50,13 @@ fig2.update_layout(
     yaxis_title="Nombre d'occurrence"
 )
 
-
-
 ######################################################
-#################### GRAPH 03 Q02 ####################
+#################### GRAPH 02 Q02 ####################
 ######################################################
-
-listedep = {}
-for k in CSV_untouch["department"]:
-    if k not in listedep:
-         listedep[k] = 1
-    else:
-        listedep[k] += 1
 
 fig3 = px.bar(
-    DF,
-    x=listedep.keys(),
-    y=listedep.values(),
+    x=listedep.index,
+    y=listedep.values,
     height=600
 )
 
@@ -95,7 +66,7 @@ fig3.update_layout(
 )
 
 ######################################################
-#################### GRAPH 02 & 03 ###################
+#################### GRAPH 01 & 02 ###################
 ######################################################
 
 fig2_col, fig3_col = st.columns(2)
@@ -106,21 +77,14 @@ with fig3_col:
     st.plotly_chart(fig3)
 
 ######################################################
-#################### GRAPH 04 Q04 ####################
+#################### GRAPH 03 Q04 ####################
 ######################################################
 st.write("### When and how do custormers usually order")
 DF = round(CSV_untouch["order_hour_of_day"], 0)
-listeheure = {}
-for k in DF:
-    if k not in listeheure:
-         listeheure[k] = 1
-    else:
-        listeheure[k] += 1
 
 fig4 = px.bar(
-    DF,
-    x=listeheure.keys(),
-    y=listeheure.values(),
+    x=listeheure.index,
+    y=listeheure.values,
     height=600
 )
 
@@ -130,25 +94,14 @@ fig4.update_layout(
 )
 
 ######################################################
-#################### GRAPH 05 Q04 ####################
+#################### GRAPH 04 Q04 ####################
 ######################################################
 
 DF = round(CSV_untouch["days_since_prior_order"], 0)
 
-listejour = {}
-
-# On fait un boucle qui parcour tout DF, et on ajoute chaque nouvelle durée de temps en clé si elle n'existe pas, et on augmente sa valeur qui 
-# correspond au nombre de fois ou cette durée apparait dans le CSV
-for k in DF:
-    if k not in listejour:
-        listejour[k] = 1
-    else:
-        listejour[k] += 1
-
 fig5 = px.bar(
-    DF,
-    x=listejour.keys(),
-    y=listejour.values(),
+    x=listejour.index,
+    y=listejour.values,
     height=600
 )
 
@@ -160,7 +113,7 @@ fig5.update_layout(
 
 
 ######################################################
-#################### GRAPH 04 & 05 ###################
+#################### GRAPH 03 & 04 ###################
 ######################################################
 
 fig4_col, fig5_col = st.columns(2)
@@ -172,10 +125,11 @@ with fig5_col:
 
 
 ######################################################
-#################### GRAPH 06 Q05 ####################
+#################### GRAPH 05 Q05 ####################
 ######################################################
 
 st.write("### What time of day do most people buy food ?")
+
 Bad_DEPARTEMENT = ['other', 'pets', 'personal care', 'house hold']
 CSV_untouch = CSV_untouch.drop(CSV_untouch[CSV_untouch.department.isin(Bad_DEPARTEMENT)].index)
 CSV_Clean = CSV_untouch.groupby(
@@ -211,7 +165,7 @@ st.plotly_chart(fig6)
 
 
 ######################################################
-#################### GRAPH 07 Q06 ####################
+#################### GRAPH 06 Q06 ####################
 ######################################################
 
 
