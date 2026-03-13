@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
-import joblib 
+import joblib
+import numpy as np
 
 ##########################################################################################
 ############################## Initialisation des données ################################
@@ -108,34 +109,47 @@ if check:
     # Récupérer l'item souvent achtées ensuite
     next_product_dict = compute_next_product(CSV_untouch)
     
+    jours_semaine = {0: "Lundi", 1: "Mardi", 2: "Mercredi", 3: "Jeudi", 4: "Vendredi", 5: "Samedi",6: "Dimanche"}
+
     ######################################################
     ################## Colonnes tableau ##################
     ######################################################
 
-    dataf["prct_rachat"] = dataf["product_name"].map(dictionnaire_rachat) * 100
-    dataf["meilleur_moment"] = dataf["product_name"].map(dictionnaire_heure)
-    dataf["meilleur_jour"] = dataf["product_name"].map(dictionnaire_jour)
-    dataf["Quantité écoulée prédite"] = round(dataf["product_name"].map(dictionnaire_ecoulé) / len(CSV_untouch["product_name"]))
+    dataf["Pourcentage de Rachat"] = dataf["product_name"].map(dictionnaire_rachat) * 100
+    dataf["Prédiction quantité écoulée"] = round(dataf["product_name"].map(dictionnaire_ecoulé))
     dataf["Vrai quantité écoulée"] = dataf["product_name"].map(real_quantite)
-    dataf["emplacement_panier"] = dataf["product_name"].map(dictionnaire_panier)
-    dataf["prochain item"] = dataf["product_name"].map(next_product_dict)
+    dataf["Meilleur moment de la journée"] = dataf["product_name"].map(dictionnaire_heure)
+    dataf["Meilleur jour d'achat"] = dataf["product_name"].map(dictionnaire_jour)
+    dataf["Meilleur jour d'achat"] = dataf["Meilleur jour d'achat"].map(jours_semaine)
+    dataf["Emplacement dans le panier"] = round(dataf["product_name"].map(dictionnaire_panier))
+    dataf["Item souvent acheté ensuite"] = dataf["product_name"].map(next_product_dict)
 
     ######################################################
     ####################### Scores #######################
     ######################################################
 
-    poids = {"prct_rachat": 0.4,
+    dataf["Erreur quantité"] = abs(dataf["Prédiction quantité écoulée"] - dataf["Vrai quantité écoulée"])
+    dataf["Score quantité"] = np.maximum(0, dataf["Prédiction quantité écoulée"] - dataf["Erreur quantité"])
+
+    poids = {"Pourcentage de Rachat": 0.4,
              "nb_achats": 0.1,
-             "Quantité écoulée prédite": 0.3,
-             "emplacement_panier": 0.2}
+             "Score quantité": 0.3,
+             "Emplacement dans le panier": 0.2}
     calculpoids = 0
 
     for k, j in poids.items():
         calculpoids += dataf[k] * j
-    dataf["score"] = calculpoids
-    dataf["Quantité écoulée prédite"] = round(dataf["product_name"].map(dictionnaire_ecoulé))
+    dataf["Score / 100"] = calculpoids
 
-    st.dataframe(dataf, use_container_width=True, hide_index=True)
+    dataf = dataf.rename(columns={
+        "product_name": "Nom du produit",
+        "nb_achats": "Nombre d'acheteurs différents"
+    })
+
+    colonnes_a_afficher = ["Nom du produit", "Nombre d'acheteurs différents","Pourcentage de Rachat","Prédiction quantité écoulée","Vrai quantité écoulée","Meilleur moment de la journée","Meilleur jour d'achat","Emplacement dans le panier","Item souvent acheté ensuite","Score / 100"
+]
+
+    st.dataframe(dataf[colonnes_a_afficher], use_container_width=True, hide_index=True)
 
 
 # Sinon on laisse un tableau vide
