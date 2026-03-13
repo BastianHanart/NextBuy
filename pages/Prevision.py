@@ -46,6 +46,8 @@ CSV_Clean = compute_product_stats(CSV_untouch)
 DF = CSV_Clean.head(180)
 
 dictionnaire_panier = joblib.load("Model_IA/Emplacement_panier_Model")
+dictionnaire_heure = joblib.load("Model_IA/Meilleure_Heure_Model")
+dictionnaire_rachat = joblib.load("Model_IA/Prct_rachat_Model")
 
 ######################################################
 ################# Pourcentage rachat #################
@@ -87,8 +89,9 @@ if check:  # si au moins un produit est sélectionné
     )
 
     # transformer en %
-    dataf["prct_rachat"] = dataf["prct_rachat"] * 100
+    dataf["prct_rachat"] = dataf["product_name"].map(dictionnaire_rachat) * 100
     dataf["nb_achats"] = 500 / len(CSV_untouch["user_id"].unique())
+    dataf["meilleur_moment"] = dataf["product_name"].map(dictionnaire_heure)
     dataf["quantite_ecoulee"] = 1589 / len(CSV_untouch["product_name"])
     dataf["emplacement_panier"] = dataf["product_name"].map(dictionnaire_panier)
     
