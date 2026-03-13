@@ -25,7 +25,7 @@ def compute_repurchase(df):
     taux = ((CSV_Clean['total_achat'] - CSV_Clean['nbr_unique']) / CSV_Clean['total_achat']) * 100
     return taux.mean()
 
-# Classer les noms des nom de produit par ordre alphabétique
+# Classer les noms de produit par ordre alphabétique
 @st.cache_data
 def get_product_list(df):
     return sorted(df["product_name"].unique())
